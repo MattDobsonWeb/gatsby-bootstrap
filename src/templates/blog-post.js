@@ -15,7 +15,10 @@ const BlogPost = ({ data }) => {
             <div class="container">
               <div class="post-single">
                 <div class="post-thumbnail">
-                  <img src={post.frontmatter.featuredimage} alt="" />
+                  <Img
+                    fluid={post.frontmatter.featuredimage.childImageSharp.fluid}
+                    alt=""
+                  />
                 </div>
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
@@ -267,7 +270,13 @@ export const pageQuery = graphql`
         title
         description
         tags
-        featuredimage
+        featuredimage {
+          childImageSharp {
+            fluid(maxWidth: 1000, quality: 100) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
       }
     }
   }
