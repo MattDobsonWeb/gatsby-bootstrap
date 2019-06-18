@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/style.default.css';
 import '../styles/fontastic.css';
 
-import 'bootstrap/dist/js/bootstrap.min';
+// import 'bootstrap/dist/js/bootstrap.min.js';
 
 import Header from './Header';
 
