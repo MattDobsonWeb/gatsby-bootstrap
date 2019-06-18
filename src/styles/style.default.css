@@ -746,10 +746,13 @@ section.featured-posts .comments::after {
 }
 
 section.featured-posts .image {
-  max-height: 200px;
   width: auto;
   overflow: hidden;
   padding: 0;
+}
+
+section.featured-posts .image .gatsby-image-wrapper {
+  height: 100%;
 }
 
 section.featured-posts .image img {

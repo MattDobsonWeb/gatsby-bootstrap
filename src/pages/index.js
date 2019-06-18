@@ -1,109 +1,60 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link, graphql, StaticQuery } from 'gatsby';
+import { Link } from 'gatsby';
 import Img from 'gatsby-image';
+
 import Layout from '../components/Layout';
+import HeroImage from '../img/hero.jpg';
+import BlogRoll from '../components/BlogRoll';
 
-class BlogRoll extends React.Component {
-  render() {
-    const { data } = this.props;
-    const { edges: posts } = data.allMarkdownRemark;
+export default () => {
+  return (
+    <Layout>
+      {/* start hero */}
+      <section
+        style={{
+          background: `url(${HeroImage})`,
+          backgroundSize: `cover`,
+          backgroundPosition: `center center`
+        }}
+        class="hero"
+      >
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-7">
+              <h1>Bootstrap 4 Blog - A free template by Bootstrap Temple</h1>
+              <a href="#" class="hero-link">
+                Discover More
+              </a>
+            </div>
+          </div>
+          <a href=".intro" class="continue link-scroll">
+            <i class="fa fa-long-arrow-down"></i> Scroll Down
+          </a>
+        </div>
+      </section>
+      {/* end hero */}
 
-    return (
-      <Layout>
-        <div className="container">
-          <div className="row">
-            {posts &&
-              posts.map(({ node: post }) => (
-                <div className="col-md-4" key={post.id}>
-                  <article
-                    className={`blog-list-item tile is-child box notification ${
-                      post.frontmatter.featuredpost ? 'is-featured' : ''
-                    }`}
-                  >
-                    <header>
-                      {post.frontmatter.featuredimage ? (
-                        <div className="featured-thumbnail">
-                          <Img
-                            fluid={
-                              post.frontmatter.featuredimage.childImageSharp
-                                .fluid
-                            }
-                          />
-                        </div>
-                      ) : null}
-                      <p className="post-meta">
-                        <Link
-                          className="title has-text-primary is-size-4"
-                          to={post.fields.slug}
-                        >
-                          {post.frontmatter.title}
-                        </Link>
-                        <span> &bull; </span>
-                        <span className="subtitle is-size-5 is-block">
-                          {post.frontmatter.date}
-                        </span>
-                      </p>
-                    </header>
-                    <p>
-                      {post.excerpt}
-                      <br />
-                      <br />
-                      <Link className="button" to={post.fields.slug}>
-                        Keep Reading →
-                      </Link>
-                    </p>
-                  </article>
-                </div>
-              ))}
+      {/* start intro */}
+      <section class="intro">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <h2 class="h3">Some great intro here</h2>
+              <p class="text-big">
+                Place a nice <strong>introduction</strong> here{' '}
+                <strong>to catch reader's attention</strong>. Lorem ipsum dolor
+                sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                veniam, quis nostrud nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderi.
+              </p>
+            </div>
           </div>
         </div>
-      </Layout>
-    );
-  }
-}
+      </section>
+      {/* end intro */}
 
-BlogRoll.propTypes = {
-  data: PropTypes.shape({
-    allMarkdownRemark: PropTypes.shape({
-      edges: PropTypes.array
-    })
-  })
+      <BlogRoll />
+    </Layout>
+  );
 };
-
-export default () => (
-  <StaticQuery
-    query={graphql`
-      query BlogRollQuery {
-        allMarkdownRemark(
-          sort: { order: DESC, fields: [frontmatter___date] }
-          filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
-        ) {
-          edges {
-            node {
-              excerpt(pruneLength: 400)
-              id
-              fields {
-                slug
-              }
-              frontmatter {
-                title
-                templateKey
-                date(formatString: "MMMM DD, YYYY")
-                featuredpost
-                featuredimage {
-                  childImageSharp {
-                    fluid(maxWidth: 120, quality: 100) {
-                      ...GatsbyImageSharpFluid
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `}
-    render={(data, count) => <BlogRoll data={data} count={count} />}
-  />
-);
